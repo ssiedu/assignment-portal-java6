@@ -4,7 +4,7 @@
         <hr>
         <pre>
         <a href="">Change-Password</a>
-        <a href="">Submit-Assignment</a>
+        <a href="AssignmentSubmission.jsp">Submit-Assignment</a>
         <a href="">Change-Assignment</a>
         <a href="">View-Solutions</a>
         <a href="">Logout</a>

@@ -4,9 +4,25 @@
         <servlet-name>VerifyUser</servlet-name>
         <servlet-class>VerifyUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveFaculty</servlet-name>
+        <servlet-class>SaveFaculty</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveQuestion</servlet-name>
+        <servlet-class>SaveQuestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>VerifyUser</servlet-name>
         <url-pattern>/VerifyUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveFaculty</servlet-name>
+        <url-pattern>/SaveFaculty</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveQuestion</servlet-name>
+        <url-pattern>/SaveQuestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
