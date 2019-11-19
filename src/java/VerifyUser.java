@@ -56,6 +56,7 @@ public class VerifyUser extends HttpServlet {
             }
 
         } else if (s3.equals("student")) {
+            //jdbc-code for student authentication
             response.sendRedirect("studentpage.jsp");
         }
 

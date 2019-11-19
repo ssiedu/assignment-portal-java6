@@ -2,43 +2,57 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Date;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SaveQuestion extends HttpServlet {
+public class SubjectSearchResult extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out=response.getWriter();
-        String fcode=request.getParameter("fcode");
-        String question=request.getParameter("question");
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         String subject=request.getParameter("subject");
-        Date date=new Date();
-        java.sql.Date sdate=new java.sql.Date(date.getTime());
-        String sql="insert into quebank(que,subject,sdate,fcode) values(?,?,?,?)";
+        String sql="SELECT * FROM quebank where subject=?";
         try{
             Connection con=mypkg.Data.connect();
             PreparedStatement ps=con.prepareStatement(sql);
-            ps.setString(1, question);
-            ps.setString(2, subject);
-            ps.setDate(3, sdate);
-            ps.setString(4, fcode);
-            ps.executeUpdate();
+            ps.setString(1, subject);
+            ResultSet rs=ps.executeQuery();
+            out.println("<html>");
+            out.println("<body>");
+            out.println("<h3>List-of-Questions-For-"+subject+"</h3>");
+            out.println("<table border=2>");
+            out.println("<tr>");
+            out.println("<th>Code</th>");
+            out.println("<th>Que</th>");
+            out.println("<th>Date</th>");
+            out.println("<th>FCode</th>");
+            out.println("<tr>");
+            while(rs.next()){
+                String s1=rs.getString("qcode");
+                String s2=rs.getString("que");
+                String s3=rs.getString("sdate");
+                String s4=rs.getString("fcode");
+                out.println("<tr>");
+                out.println("<td>"+s1+"</td>");
+                out.println("<td>"+s2+"</td>");
+                out.println("<td>"+s3+"</td>");
+                out.println("<td>"+s4+"</td>");
+                out.println("</tr>");
+            }
+            out.println("</table>");
+            out.println("<hr>");
+            out.println("<h4><a href=subjectsearch.jsp>Search-More</a></h3>");
+            out.println("<h4><a href=studentpage.jsp>Student-Home</a></h3>");
+            out.println("</body>");
+            out.println("</html>");
             con.close();
-            out.println("<html><body>");
-            out.println("<h3>Question Stored Successfully</h3>");
-            out.println("<h4><a href=AssignmentSubmission.jsp>Add-More</a></h4>");
-            out.println("<h4><a href=facultypage.jsp>Faculty-Page</a></h4>");            
-            out.println("</body></html>");
         }catch(Exception e){
             out.println(e);
         }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
